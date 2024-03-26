@@ -1,0 +1,71 @@
+<!--
+Created Date: Mar 25 2024, 03:06:28 PM
+Author: @WhoTho#9592 whotho06@gmail.com
+-----
+Last Modified: Mar 25 2024, 08:20:37 PM
+Modified By: @WhoTho#9592
+-----
+CHANGE LOG:
+Date                        | Comments
+----------------------------+---------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>oh yeah idle game</title>
+        <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+        <link rel="stylesheet" type="text/css" href="styles/layout.css" />
+        <link rel="stylesheet" type="text/css" href="styles/buildings-and-upgrades.css" />
+    </head>
+    <body>
+        <div id="game-name">
+            <h1>Oh Yeah Idle Game</h1>
+        </div>
+
+        <div id="wrapper">
+                <div id="buildings-and-upgrades" class="game-section">
+                    <div id="buildings-wrapper" class="">
+                        <h2>Buildings</h2>
+                        <h1>Generators:</h1>
+                        <div id="generators" class="clickable-section"></div>
+                        <!-- <h1>Power Lines:</h1>
+                        <div id="powerLines"></div> -->
+                        <h1>Factories:</h1>
+                        <div id="factories" class="clickable-section"></div>
+                        <h1>Batteries:</h1>
+                        <div id="batteries" class="clickable-section"></div>
+                        <h1>Banks:</h1>
+                        <div id="banks" class="clickable-section"></div>
+                    </div>
+                    <div id="upgrades-wrapper" class="hidden">
+                        <h2>Upgrades</h2>
+                        <div id="upgrades-grid"></div>
+                    </div>
+                </div>
+
+                <div id="game-wrapper" class="game-section">
+                    <div id="game-grid"></div>
+                </div>
+                <div id="info-and-clicker" class="game-section">
+                    <div id="info-wrapper">
+                        <div id="energy-bar">
+                            <span id="energy-bar-text">0 / 100 (+0)</span>
+                            <div id="energy-bar-fill"></div>
+                        </div>
+                        <div id="money-bar">
+                            <span id="money-bar-text">0 / 100 (+0)</span>
+                            <div id="money-bar-fill"></div>
+                        </div>
+                    </div>
+                    <div id="clicker-wrapper">
+                        <h2>Clicker</h2>
+                        <button id="clicker-button">
+                            yo click me :energy:
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script type="module" src="scripts/index.js"></script>
+</html>

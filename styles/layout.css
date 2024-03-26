@@ -1,0 +1,94 @@
+/*
+ * Created Date: Mar 25 2024, 03:09:39 PM
+ * Author: @WhoTho#9592 whotho06@gmail.com
+ * -----
+ * Last Modified: Mar 25 2024, 08:10:42 PM
+ * Modified By: @WhoTho#9592
+ * -----
+ * CHANGE LOG:
+ * Date                        | Comments
+ * ----------------------------+---------------------------------------------
+ */
+
+:root {
+    --primary-color: #1d336e;
+    --light-color: #bac5e2;
+    --dark-color: #030303;
+    --background-color: #212634;
+    --primary-color-lighter: color-mix(in srgb, var(--primary-color), #fff 25%);
+    --primary-color-darker: color-mix(in srgb, var(--primary-color), #000 25%);
+}
+
+* {
+    box-sizing: border-box;
+    /* border: 1px solid red; */
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Add this line to remove scrollbar */
+    height: 100vh;
+
+    color: var(--light-color);
+}
+
+.game-section {
+    background-color: var(--primary-color);
+    border-width: 2px;
+    border-style: solid;
+    border-left-color: var(--primary-color-lighter);
+    border-right-color: var(--primary-color-darker);
+    border-top-color: var(--primary-color-lighter);
+    border-bottom-color: var(--primary-color-darker);
+
+    margin: 10px;
+}
+
+#game-name {
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+}
+
+/* div {
+    border: 1px solid red;
+} */
+
+#wrapper {
+    display: flex;
+    height: 90%;
+    width: 100%;
+}
+
+#game-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+#game-grid {
+    width: 70%;
+    min-width: 400px;
+    aspect-ratio: 1/1;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    background-color: var(--primary-color);
+}
+
+#info-and-clicker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    width: 25%;
+}

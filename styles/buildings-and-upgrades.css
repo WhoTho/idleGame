@@ -1,0 +1,30 @@
+/*
+ * Created Date: Mar 25 2024, 04:35:24 PM
+ * Author: @WhoTho#9592 whotho06@gmail.com
+ * -----
+ * Last Modified: Mar 25 2024, 08:12:14 PM
+ * Modified By: @WhoTho#9592
+ * -----
+ * CHANGE LOG:
+ * Date                        | Comments
+ * ----------------------------+---------------------------------------------
+ */
+
+#buildings-and-upgrades {
+    width: 25%;
+    min-width: 200px;
+    position: relative;
+    padding: 20px;
+}
+
+#buildings-and-upgrades > div {
+    background-color: var(--primary-color);
+}
+
+#buildings-and-upgrades > div.hidden {
+    display: none !important;
+}
+
+.clickable-section {
+    display: flex;
+}
