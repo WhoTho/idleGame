@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:55:18 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 25 2024, 04:10:12 PM
+ * Last Modified: Mar 28 2024, 07:40:30 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -10,13 +10,11 @@
  * ----------------------------+---------------------------------------------
  */
 
-import Tile from "../tile";
+import Building from "../building.js";
 
-class Generator extends Tile {
-    constructor() {
-        super();
-        this.classType = "generator";
-        this.energy = 0;
+class Generator extends Building {
+    constructor(game, specificType) {
+        super(game, "generator", specificType);
     }
 
     tick() {
@@ -25,13 +23,13 @@ class Generator extends Tile {
 }
 
 class WindMill extends Generator {
-    constructor() {
-        super();
-        this.type = "windMill";
+    constructor(game) {
+        super(game, "windMill");
     }
 
     tick() {
-        this.energy += 2;
+        this.addEnergy(this.baseEnergyPerTick);
+        console.log(this.baseEnergyPerTick, this.energy, this.maxEnergy);
     }
 }
 
