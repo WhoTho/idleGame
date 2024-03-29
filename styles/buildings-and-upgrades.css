@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 04:35:24 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 28 2024, 07:09:40 PM
+ * Last Modified: Mar 29 2024, 11:46:00 AM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -33,4 +33,14 @@
     width: 50px;
     aspect-ratio: 1/1;
     outline: 1px solid red;
+    display: none;
+    border: none;
+}
+
+.building-selection-element.unlocked {
+    display: block !important;
+}
+
+.building-selection-element.selected {
+    border: 2px solid var(--light-color);
 }

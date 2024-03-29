@@ -2,7 +2,7 @@
  * Created Date: Mar 26 2024, 08:24:56 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 28 2024, 07:41:00 PM
+ * Last Modified: Mar 29 2024, 11:12:51 AM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -11,11 +11,8 @@
  */
 
 class Building {
-    constructor(game, buildingType = "unknown", specificType = "unknown") {
+    constructor(game) {
         this.game = game;
-
-        this.buildingType = buildingType;
-        this.specificType = specificType;
 
         this.energy = 0;
         this.maxEnergy = 0;
@@ -26,26 +23,15 @@ class Building {
     }
 
     loadConfigs() {
-        let buildingConfig = this.game.buildingConfigs[this.buildingType]?.[this.specificType];
-        if (!buildingConfig) {
-            console.error(`No config found for ${this.buildingType} - ${this.specificType}`);
-            return;
+        if (!this.constructor.displayName) {
+            console.error("No displayName found for", this.constructor.name);
+            return this;
         }
 
-        this.displayName = buildingConfig.displayName;
-        this.description = buildingConfig.description;
+        this.maxEnergy = this.constructor.baseMaxEnergy;
+        this.maxMoney = this.constructor.baseMaxMoney;
 
-        this.baseCost = buildingConfig.baseCost;
-        this.costExponent = buildingConfig.costExponent;
-
-        this.baseEnergyPerTick = buildingConfig.baseEnergyPerTick;
-        this.baseMoneyPerTick = buildingConfig.baseMoneyPerTick;
-
-        this.baseMaxEnergy = buildingConfig.baseMaxEnergy;
-        this.maxEnergy = this.baseMaxEnergy;
-        this.baseMaxMoney = buildingConfig.baseMaxMoney;
-
-        this.upgrades = buildingConfig.upgrades; //FIXME
+        this.cost = this.constructor.baseCost;
     }
 
     tick() {

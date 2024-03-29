@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 04:37:00 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 28 2024, 07:22:22 PM
+ * Last Modified: Mar 29 2024, 11:50:47 AM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -11,9 +11,8 @@
  */
 
 class BuildingSelection {
-    constructor(game, element) {
+    constructor(game) {
         this.game = game;
-        this.element = element;
         this.buildingTypeElements = new Map(
             ["generator", "factory", "battery", "bank"].map((type) => [
                 type,
@@ -21,34 +20,56 @@ class BuildingSelection {
             ])
         );
 
-        console.log(this.buildingTypeElements);
+        this.selectedBuildingClass = null;
 
-        this.buildings = [];
-        this.selectedBuilding = null;
+        this.init();
     }
 
-    selectBuilding(building) {
-        this.selectedBuilding = building;
+    init() {
+        for (let buildingClass of this.game.buildingClasses) {
+            this.createBuildingSelectionElement(buildingClass);
+        }
     }
 
-    deselectBuilding() {
-        this.selectedBuilding = null;
-    }
-
-    getSelectedBuilding() {
-        return this.selectedBuilding;
-    }
-
-    unlockBuilding(building) {
+    createBuildingSelectionElement(buildingClass) {
         let buildingSelectionElement = document.createElement("div");
         buildingSelectionElement.classList.add("building-selection-element");
-        buildingSelectionElement.innerText = building.displayName;
+        buildingSelectionElement.innerText = buildingClass.displayName;
+
         buildingSelectionElement.addEventListener("click", () => {
-            this.selectBuilding(building);
+            this.selectBuilding(buildingClass);
         });
 
-        // TODO: remove the + "s"
-        this.buildingTypeElements.get(building.buildingType).appendChild(buildingSelectionElement);
+        buildingSelectionElement.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            this.deselectBuilding(buildingClass);
+        });
+
+        buildingClass.buildingSelectionElement = buildingSelectionElement;
+
+        this.buildingTypeElements.get(buildingClass.buildingType).appendChild(buildingSelectionElement);
+    }
+
+    selectBuilding(buildingClass) {
+        this.deselectBuilding();
+
+        this.selectedBuildingClass = buildingClass;
+        this.selectedBuildingClass.buildingSelectionElement.classList.add("selected");
+    }
+
+    deselectBuilding(buildingClass = null) {
+        if (buildingClass && buildingClass !== this.selectedBuildingClass) {
+            return;
+        }
+
+        if (this.selectedBuildingClass) {
+            this.selectedBuildingClass.buildingSelectionElement.classList.remove("selected");
+        }
+        this.selectedBuildingClass = null;
+    }
+
+    unlockBuilding(buildingClass) {
+        buildingClass.buildingSelectionElement.classList.add("unlocked");
     }
 }
 

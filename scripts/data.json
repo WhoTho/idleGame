@@ -1,11 +1,18 @@
 {
+    "game": {
+        "baseMaxMoney": 100,
+        "baseMaxEnergy": 100,
+        "startingMoney": 15,
+        "startingEnergy": 0,
+        "delayBetweenClicks": 100
+    },
     "generator": {
         "windMill": {
             "displayName": "Wind Mill",
             "description": "Generates energy from wind.",
             "baseEnergyPerTick": 1,
-            "baseMaxEnergy": 10,
-            "baseCost": 10,
+            "baseMaxEnergy": 5,
+            "baseCost": 5,
             "costExponent": 1.1,
             "upgrades": [
                 {
@@ -17,6 +24,18 @@
                     "costExponent": 1.1
                 }
             ]
+        }
+    },
+    "bank": {
+        "farm": {
+            "displayName": "Farm",
+            "description": "Generates money from energy (cuz lights yk).",
+            "baseEnergyPerFill": 10,
+            "baseMoneyPerFill": 1,
+            "baseMaxMoney": 10,
+            "baseCost": 10,
+            "costExponent": 1.1,
+            "upgrades": []
         }
     }
 }

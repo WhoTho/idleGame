@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:39:51 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 28 2024, 07:37:52 PM
+ * Last Modified: Mar 29 2024, 12:06:31 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -12,18 +12,18 @@
 
 import Tile from "./tile.js";
 import { GRID_SIZE, STARTING_DATA } from "./constants.js";
-import buildingConfigs from "./buildings/data.json" assert { type: "json" };
-//const buildingConfigs = {};
+import configData from "./data.json" assert { type: "json" };
 import BuildingSelection from "./buildingSelection.js";
-import { WindMill } from "./buildings/generators.js";
 import InfoSection from "./infoSection.js";
 import Clicker from "./clicker.js";
+import { WindMill } from "./buildings/generators.js";
+import { Farm } from "./buildings/banks.js";
 
 class Game {
     constructor() {
         this.gameGridElement = document.getElementById("game-grid");
         this.grid = [];
-        this.buildingConfigs = buildingConfigs;
+        this.configData = configData;
 
         this.startTime = Date.now();
 
@@ -31,10 +31,10 @@ class Game {
     }
 
     init() {
-        this.money = 0;
-        this.energy = 0;
-        this.maxMoney = STARTING_DATA.maxMoney;
-        this.maxEnergy = STARTING_DATA.maxEnergy;
+        this.money = this.configData.game.startingMoney;
+        this.energy = this.configData.game.startingEnergy;
+        this.maxMoney = this.configData.game.baseMaxMoney;
+        this.maxEnergy = this.configData.game.baseMaxEnergy;
 
         for (let y = 0; y < GRID_SIZE[1]; y++) {
             let row = [];
@@ -45,21 +45,22 @@ class Game {
             this.grid.push(row);
         }
 
-        this.buildingSelection = new BuildingSelection(this, document.getElementById("buildings-wrapper"));
-        this.buildings = [new WindMill(this)];
-        this.infoSection = new InfoSection(this, document.getElementById("info-wrapper"));
-        this.clicker = new Clicker(this, document.getElementById("clicker-button"));
+        this.buildingClasses = [WindMill, Farm];
+        for (let buildingClass of this.buildingClasses) {
+            this.loadBuildingConfigs(buildingClass);
+        }
+        this.buildingSelection = new BuildingSelection(this);
 
-        this.buildingSelection.unlockBuilding(this.buildings[0]);
+        this.infoSection = new InfoSection(this);
+        this.clicker = new Clicker(this);
+
+        this.buildingSelection.unlockBuilding(this.buildingClasses[0]);
+        this.buildingSelection.unlockBuilding(this.buildingClasses[1]);
+        this.updateInfo();
     }
 
     _createGridTile(x, y) {
-        let tileElement = document.createElement("div");
-        tileElement.classList.add("tile");
-
-        this.gameGridElement.appendChild(tileElement);
-
-        const tile = new Tile(this, x, y, tileElement);
+        const tile = new Tile(this, x, y);
         return tile;
     }
 
@@ -161,24 +162,52 @@ class Game {
     }
 
     requestBuildingPlacement(tile) {
-        let selectBuilding = this.buildingSelection.selectedBuilding;
-        if (!selectBuilding) {
+        let selectedBuildingClass = this.buildingSelection.selectedBuildingClass;
+        if (!selectedBuildingClass) {
+            tile.setBuilding(null);
             return;
         }
 
         //TODO change
 
-        // if (selectBuilding.baseCost > this.money) {
-        //     return;
-        // }
+        if (selectedBuildingClass.baseCost > this.money) {
+            return;
+        }
 
-        this.money -= selectBuilding.baseCost;
+        this.money -= selectedBuildingClass.baseCost;
 
-        tile.setBuilding(selectBuilding);
+        tile.setBuilding(selectedBuildingClass);
+
+        this.updateInfo();
     }
 
     updateInfo() {
         this.infoSection.updateInfo(this.money, 0, this.maxMoney, this.energy, 0, this.maxEnergy);
+    }
+
+    loadBuildingConfigs(buildingClass) {
+        let buildingConfig = this.configData[buildingClass.buildingType]?.[buildingClass.specificType];
+        if (!buildingConfig) {
+            console.error("Building config not found");
+            return this;
+        }
+
+        buildingClass.displayName = buildingConfig.displayName;
+        buildingClass.description = buildingConfig.description;
+
+        buildingClass.baseCost = buildingConfig.baseCost;
+        buildingClass.costExponent = buildingConfig.costExponent;
+
+        buildingClass.baseEnergyPerTick = buildingConfig.baseEnergyPerTick;
+        buildingClass.baseEnergyPerFill = buildingConfig.baseEnergyPerFill;
+        buildingClass.baseMoneyPerFill = buildingConfig.baseMoneyPerFill;
+
+        buildingClass.baseMaxEnergy = buildingConfig.baseMaxEnergy;
+        buildingClass.baseMaxMoney = buildingConfig.baseMaxMoney;
+
+        buildingClass.upgrades = buildingConfig.upgrades; //FIXME
+
+        return this;
     }
 }
 

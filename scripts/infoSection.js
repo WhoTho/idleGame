@@ -2,7 +2,7 @@
  * Created Date: Mar 28 2024, 07:27:27 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 28 2024, 07:30:26 PM
+ * Last Modified: Mar 29 2024, 12:03:07 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -11,7 +11,7 @@
  */
 
 class InfoSection {
-    constructor(game, element) {
+    constructor(game) {
         this.game = game;
 
         // this.moneyBarElement = document.getElementById("money-bar")

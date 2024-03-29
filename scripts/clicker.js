@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:49:56 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 28 2024, 07:37:23 PM
+ * Last Modified: Mar 29 2024, 12:09:00 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -11,17 +11,29 @@
  */
 
 class Clicker {
-    constructor(game, element) {
+    constructor(game) {
         this.game = game;
-        this.element = element;
+        this.buttonElement = document.getElementById("clicker-button");
 
         this.mode = "money";
+
+        this.canClick = true;
 
         this.init();
     }
 
     init() {
-        this.element.addEventListener("click", () => {
+        this.delayBetweenClicks = this.game.configData.game.delayBetweenClicks;
+
+        this.buttonElement.addEventListener("click", () => {
+            if (!this.canClick) return;
+
+            this.canClick = false;
+
+            setTimeout(() => {
+                this.canClick = true;
+            }, this.delayBetweenClicks);
+
             // if (this.mode === "money") {
             //     this.game.money += 1; //fixme
             // } else if (this.mode === "energy") {

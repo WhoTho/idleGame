@@ -2,10 +2,41 @@
  * Created Date: Mar 25 2024, 04:01:45 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 25 2024, 04:01:46 PM
+ * Last Modified: Mar 29 2024, 11:33:29 AM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
  * Date                        | Comments
  * ----------------------------+---------------------------------------------
  */
+
+import Building from "../building.js";
+
+class Bank extends Building {
+    static buildingType = "bank";
+
+    constructor(game) {
+        super(game);
+    }
+
+    tick() {
+        this.addMoney(1);
+    }
+}
+
+class Farm extends Bank {
+    static specificType = "farm";
+
+    constructor(game) {
+        super(game);
+    }
+
+    tick() {
+        if (this.game.energy >= this.constructor.baseEnergyPerFill) {
+            this.game.removeEnergy(this.constructor.baseEnergyPerFill);
+            this.addMoney(this.constructor.baseMoneyPerFill);
+        }
+    }
+}
+
+export { Bank, Farm };
