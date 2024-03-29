@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:39:51 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 12:06:31 PM
+ * Last Modified: Mar 29 2024, 12:58:55 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -28,6 +28,7 @@ class Game {
         this.startTime = Date.now();
 
         this.init();
+        this.initMouseListenersForGameGrid();
     }
 
     init() {
@@ -57,6 +58,28 @@ class Game {
         this.buildingSelection.unlockBuilding(this.buildingClasses[0]);
         this.buildingSelection.unlockBuilding(this.buildingClasses[1]);
         this.updateInfo();
+    }
+
+    initMouseListenersForGameGrid() {
+        this.gameGridElement.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+
+        document.addEventListener("mousedown", (event) => {
+            if (event.button === 0) {
+                this.leftMouseDown = true;
+            } else if (event.button === 2) {
+                this.rightMouseDown = true;
+            }
+        });
+
+        document.addEventListener("mouseup", (event) => {
+            if (event.button === 0) {
+                this.leftMouseDown = false;
+            } else if (event.button === 2) {
+                this.rightMouseDown = false;
+            }
+        });
     }
 
     _createGridTile(x, y) {
@@ -168,6 +191,10 @@ class Game {
             return;
         }
 
+        if (tile.building && tile.building instanceof selectedBuildingClass) {
+            return;
+        }
+
         //TODO change
 
         if (selectedBuildingClass.baseCost > this.money) {
@@ -179,6 +206,10 @@ class Game {
         tile.setBuilding(selectedBuildingClass);
 
         this.updateInfo();
+    }
+
+    requestBuildingRemoval(tile) {
+        tile.setBuilding(null);
     }
 
     updateInfo() {
@@ -208,6 +239,49 @@ class Game {
         buildingClass.upgrades = buildingConfig.upgrades; //FIXME
 
         return this;
+    }
+
+    getTile(x, y) {
+        if (x < 0 || x >= this.grid[0].length || y < 0 || y >= this.grid.length) {
+            return null;
+        }
+
+        return this.grid[y][x];
+    }
+
+    getNeighbors(tile, shape = "plus", size = 1) {
+        let neighbors = [];
+        let x = tile.x;
+        let y = tile.y;
+
+        if (shape === "plus") {
+            for (let i = 1; i <= size; i++) {
+                neighbors.push(this.getTile(x, y - i));
+                neighbors.push(this.getTile(x, y + i));
+                neighbors.push(this.getTile(x - i, y));
+                neighbors.push(this.getTile(x + i, y));
+            }
+        } else if (shape === "cross") {
+            for (let i = 1; i <= size; i++) {
+                neighbors.push(this.getTile(x - i, y - i));
+                neighbors.push(this.getTile(x + i, y + i));
+                neighbors.push(this.getTile(x - i, y + i));
+                neighbors.push(this.getTile(x + i, y - i));
+            }
+        } else if (shape === "square") {
+            for (let i = 1; i <= size; i++) {
+                neighbors.push(this.getTile(x - i, y - i));
+                neighbors.push(this.getTile(x + i, y + i));
+                neighbors.push(this.getTile(x - i, y + i));
+                neighbors.push(this.getTile(x + i, y - i));
+                neighbors.push(this.getTile(x, y - i));
+                neighbors.push(this.getTile(x, y + i));
+                neighbors.push(this.getTile(x - i, y));
+                neighbors.push(this.getTile(x + i, y));
+            }
+        }
+
+        return neighbors.filter((tile) => tile !== null);
     }
 }
 

@@ -1,0 +1,36 @@
+/*
+ * Created Date: Mar 29 2024, 02:36:50 PM
+ * Author: @WhoTho#9592 whotho06@gmail.com
+ * -----
+ * Last Modified: Mar 29 2024, 02:38:15 PM
+ * Modified By: @WhoTho#9592
+ * -----
+ * CHANGE LOG:
+ * Date                        | Comments
+ * ----------------------------+---------------------------------------------
+ */
+
+.scrollable {
+    overflow-y: auto;
+}
+
+/* Custom scrollbar styles */
+.scrollable::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background-color: var(--color-primary-lighter);
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary-darker);
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
+}
+
+.scrollable::-webkit-scrollbar-button {
+    display: none;
+}

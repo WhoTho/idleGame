@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 04:01:45 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 11:33:29 AM
+ * Last Modified: Mar 29 2024, 01:11:50 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -15,8 +15,8 @@ import Building from "../building.js";
 class Bank extends Building {
     static buildingType = "bank";
 
-    constructor(game) {
-        super(game);
+    constructor(game, tile) {
+        super(game, tile);
     }
 
     tick() {
@@ -27,8 +27,8 @@ class Bank extends Building {
 class Farm extends Bank {
     static specificType = "farm";
 
-    constructor(game) {
-        super(game);
+    constructor(game, tile = null) {
+        super(game, tile);
     }
 
     tick() {

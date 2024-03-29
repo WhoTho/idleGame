@@ -2,7 +2,7 @@
  * Created Date: Mar 29 2024, 11:35:00 AM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 11:35:12 AM
+ * Last Modified: Mar 29 2024, 01:07:16 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -10,6 +10,9 @@
  * ----------------------------+---------------------------------------------
  */
 
-.tile {
-    outline: 1px solid red;
+#game-grid {
+    background-color: var(--color-dim-light);
 }
+
+/* .tile {
+} */

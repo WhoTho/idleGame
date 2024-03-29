@@ -2,7 +2,7 @@
 Created Date: Mar 25 2024, 03:06:28 PM
 Author: @WhoTho#9592 whotho06@gmail.com
 -----
-Last Modified: Mar 29 2024, 12:05:55 PM
+Last Modified: Mar 29 2024, 02:42:46 PM
 Modified By: @WhoTho#9592
 -----
 CHANGE LOG:
@@ -11,14 +11,19 @@ Date                        | Comments
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>oh yeah idle game</title>
         <link rel="stylesheet" type="text/css" href="styles/reset.css" />
         <link rel="stylesheet" type="text/css" href="styles/layout.css" />
         <link rel="stylesheet" type="text/css" href="styles/buildings-and-upgrades.css" />
         <link rel="stylesheet" type="text/css" href="styles/game-grid.css" />
         <link rel="stylesheet" type="text/css" href="styles/info-and-clicker.css" />
+        <link rel="stylesheet" type="text/css" href="styles/display-section.css" />
+        <link rel="stylesheet" type="text/css" href="styles/extra.css" />
     </head>
     <body>
         <div id="game-name">
@@ -26,48 +31,50 @@ Date                        | Comments
         </div>
 
         <div id="wrapper">
-                <div id="buildings-and-upgrades" class="game-section">
-                    <div id="buildings-wrapper" class="">
-                        <h2>Buildings</h2>
-                        <h1>Generators:</h1>
-                        <div id="generator-section" class="clickable-section"></div>
-                        <!-- <h1>Power Lines:</h1>
+            <div id="buildings-and-upgrades" class="game-section outset-border">
+                <div id="buildings-wrapper" class="data-section outset-border">
+                    <h2>Buildings</h2>
+                    <h1>Generators:</h1>
+                    <div id="generator-section" class="clickable-section"></div>
+                    <!-- <h1>Power Lines:</h1>
                         <div id="powerLines"></div> -->
-                        <h1>Factories:</h1>
-                        <div id="factory-section" class="clickable-section"></div>
-                        <h1>Batteries:</h1>
-                        <div id="battery-section" class="clickable-section"></div>
-                        <h1>Banks:</h1>
-                        <div id="bank-section" class="clickable-section"></div>
-                    </div>
-                    <div id="upgrades-wrapper" class="hidden">
-                        <h2>Upgrades</h2>
-                        <div id="upgrades-grid"></div>
-                    </div>
+                    <h1>Factories:</h1>
+                    <div id="factory-section" class="clickable-section"></div>
+                    <h1>Batteries:</h1>
+                    <div id="battery-section" class="clickable-section"></div>
+                    <h1>Banks:</h1>
+                    <div id="bank-section" class="clickable-section"></div>
                 </div>
+                <div id="upgrades-wrapper" class="hidden data-section outset-border">
+                    <h2>Upgrades</h2>
+                    <div id="upgrades-grid"></div>
+                </div>
+            </div>
 
-                <div id="game-wrapper" class="game-section">
-                    <div id="game-grid"></div>
+            <div id="game-wrapper" class="game-section outset-border">
+                <div id="game-grid"></div>
+            </div>
+            <div id="info-and-clicker" class="game-section outset-border">
+                <div id="display-wrapper" class="data-section outset-border scrollable">
+                    <h2>Display</h2>
+                    <div id="display-text">lmao</div>
                 </div>
-                <div id="info-and-clicker" class="game-section">
-                    <div id="info-wrapper">
-                        <div id="energy-bar">
-                            <span id="energy-bar-text">0 / 100 (+0)</span>
-                            <div id="energy-bar-fill"></div>
-                        </div>
-                        <div id="money-bar">
-                            <span id="money-bar-text">0 / 100 (+0)</span>
-                            <div id="money-bar-fill"></div>
-                        </div>
+                <div id="info-wrapper" class="data-section outset-border">
+                    <div id="energy-bar" class="bar outset-border">
+                        <div id="energy-bar-fill"></div>
+                        <span id="energy-bar-text" data-descriptive-text="Energy: ">0 / 100 (+0)</span>
                     </div>
-                    <div id="clicker-wrapper">
-                        <h2>Clicker</h2>
-                        <button id="clicker-button">
-                            yo click me :energy:
-                        </button>
+                    <div id="money-bar" class="bar outset-border">
+                        <div id="money-bar-fill"></div>
+                        <span id="money-bar-text" data-descriptive-text="Money: ">0 / 100 (+0)</span>
                     </div>
+                </div>
+                <div id="clicker-wrapper" class="data-section outset-border">
+                    <h2>Clicker</h2>
+                    <button id="clicker-button">yo click me</button>
                 </div>
             </div>
         </div>
-    <script type="module" src="scripts/index.js"></script>
+        <script type="module" src="scripts/index.js"></script>
+    </body>
 </html>

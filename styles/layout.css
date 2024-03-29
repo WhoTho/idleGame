@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:09:39 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 11:37:50 AM
+ * Last Modified: Mar 29 2024, 02:47:30 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -11,12 +11,19 @@
  */
 
 :root {
-    --primary-color: #1d336e;
-    --light-color: #bac5e2;
-    --dark-color: #030303;
-    --background-color: #212634;
-    --primary-color-lighter: color-mix(in srgb, var(--primary-color), #fff 25%);
-    --primary-color-darker: color-mix(in srgb, var(--primary-color), #000 25%);
+    /* --color-primary: #1d336e; */
+    --color-primary: #475566;
+    /* --color-light: #bac5e2; */
+    --color-light: #fff;
+    --color-dim-light: #76809b;
+    --color-light-dark: #4a4d51;
+    --color-dark: #030303;
+    --color-background: #212634;
+    --color-primary-lighter: color-mix(in srgb, var(--color-primary), #fff 25%);
+    --color-primary-darker: color-mix(in srgb, var(--color-primary), #000 25%);
+
+    --color-money: #23b83c;
+    --color-energy: #968414;
 }
 
 * {
@@ -28,25 +35,33 @@ body {
     font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--background-color);
+    background-color: var(--color-background);
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Add this line to remove scrollbar */
     height: 100vh;
 
-    color: var(--light-color);
+    color: var(--color-light);
 }
 
 .game-section {
-    background-color: var(--primary-color);
-    border-width: 2px;
-    border-style: solid;
-    border-left-color: var(--primary-color-lighter);
-    border-right-color: var(--primary-color-darker);
-    border-top-color: var(--primary-color-lighter);
-    border-bottom-color: var(--primary-color-darker);
-
+    background-color: var(--color-primary);
     margin: 10px;
+    padding: 20px;
+}
+
+.outset-border {
+    border-width: 3px;
+    border-style: outset;
+    border-left-color: var(--color-primary-lighter);
+    border-right-color: var(--color-primary-darker);
+    border-top-color: var(--color-primary-lighter);
+    border-bottom-color: var(--color-primary-darker);
+}
+
+.data-section {
+    background-color: var(--color-light-dark);
+    padding: 10px;
 }
 
 #game-name {
@@ -76,19 +91,21 @@ body {
 }
 
 #game-grid {
-    width: 70%;
+    width: 80%;
     min-width: 400px;
     aspect-ratio: 1/1;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
-    background-color: var(--primary-color);
+    background-color: var(--color-primary);
 }
 
 #info-and-clicker {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-width: 200px;
     width: 25%;
+}
+
+#buildings-and-upgrades {
+    width: 25%;
+    min-width: 200px;
 }

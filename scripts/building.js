@@ -2,7 +2,7 @@
  * Created Date: Mar 26 2024, 08:24:56 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 11:12:51 AM
+ * Last Modified: Mar 29 2024, 01:11:26 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -11,8 +11,9 @@
  */
 
 class Building {
-    constructor(game) {
+    constructor(game, tile = null) {
         this.game = game;
+        this.tile = tile;
 
         this.energy = 0;
         this.maxEnergy = 0;
@@ -36,6 +37,18 @@ class Building {
 
     tick() {
         console.error("tick() not implemented");
+    }
+
+    onPlacement() {
+        console.error("onPlacement() not implemented");
+    }
+
+    onRemoval() {
+        console.error("onRemoval() not implemented");
+    }
+
+    calculateData() {
+        console.error("calculateData() not implemented");
     }
 
     collectResources(percent = 1) {
