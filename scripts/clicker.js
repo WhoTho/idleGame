@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:49:56 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 12:44:55 PM
+ * Last Modified: Mar 29 2024, 02:58:39 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -40,8 +40,6 @@ class Clicker {
             //     this.game.energy += 1;
             // }
 
-            this.game.tick();
-            this.game.tick();
             this.game.tick();
         });
     }
