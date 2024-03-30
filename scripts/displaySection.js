@@ -2,7 +2,7 @@
  * Created Date: Mar 30 2024, 04:15:02 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 30 2024, 04:25:19 PM
+ * Last Modified: Mar 30 2024, 04:35:23 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -32,6 +32,7 @@ class DisplaySection {
         }
 
         let displayElement = displayObject.createDisplayElement();
+        if (!displayElement) return;
 
         this.currentDisplayObject = displayObject;
         this.currentDisplayElement = displayElement;

@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:41:54 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 30 2024, 04:26:44 PM
+ * Last Modified: Mar 30 2024, 04:36:21 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -100,7 +100,7 @@ class Tile {
             return;
         }
 
-        this.building = new buildingClass(this.game);
+        this.building = new buildingClass(this.game, this);
         this.element.innerText = this.building.constructor.displayName;
 
         this.building.onPlacement(this);

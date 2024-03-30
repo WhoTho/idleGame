@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:55:18 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 01:12:24 PM
+ * Last Modified: Mar 30 2024, 04:54:30 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -36,7 +36,18 @@ class WindMill extends Generator {
     }
 
     calculateData() {
-        let neighbors = this.game.getNeighbors(this);
+        super.calculateData();
+        let neighbors = this.game.getNeighbors(this.tile, "plus", 1);
+        let efficiency = 0;
+
+        for (let neighbor of neighbors) {
+            if (!neighbor.building || neighbor.building.buildingType === "ur mom") {
+                efficiency += 0.25;
+            }
+        }
+
+        this.modifications.energy.multiplicative.placement = efficiency;
+        this.calculateModificationData();
     }
 }
 
