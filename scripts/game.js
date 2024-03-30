@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:39:51 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 12:58:55 PM
+ * Last Modified: Mar 30 2024, 04:24:35 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -16,6 +16,7 @@ import configData from "./data.json" assert { type: "json" };
 import BuildingSelection from "./buildingSelection.js";
 import InfoSection from "./infoSection.js";
 import Clicker from "./clicker.js";
+import DisplaySection from "./displaySection.js";
 import { WindMill } from "./buildings/generators.js";
 import { Farm } from "./buildings/banks.js";
 
@@ -53,6 +54,7 @@ class Game {
         this.buildingSelection = new BuildingSelection(this);
 
         this.infoSection = new InfoSection(this);
+        this.displaySection = new DisplaySection(this);
         this.clicker = new Clicker(this);
 
         this.buildingSelection.unlockBuilding(this.buildingClasses[0]);
@@ -88,16 +90,21 @@ class Game {
     }
 
     tick() {
-        console.log("tick");
+        console.debug("tick");
+
+        this.collectAllResources();
+
+        this.tickAllTiles();
+
+        this.updateInfo();
+    }
+
+    tickAllTiles() {
         this.grid.forEach((row) => {
             row.forEach((tile) => {
                 tile.tick();
             });
         });
-
-        this.collectAllResources();
-
-        this.updateInfo();
     }
 
     collectAllResources() {
@@ -210,6 +217,14 @@ class Game {
 
     requestBuildingRemoval(tile) {
         tile.setBuilding(null);
+    }
+
+    requestSetDisplay(displayObject) {
+        this.displaySection.display(displayObject);
+    }
+
+    requestRemoveDisplay(displayObject) {
+        this.displaySection.removeDisplay(displayObject);
     }
 
     updateInfo() {

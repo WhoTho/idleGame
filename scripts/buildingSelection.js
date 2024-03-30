@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 04:37:00 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 02:50:29 PM
+ * Last Modified: Mar 30 2024, 04:24:28 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -43,6 +43,14 @@ class BuildingSelection {
             } else {
                 this.selectBuilding(buildingClass);
             }
+        });
+
+        buildingSelectionElement.addEventListener("mouseover", () => {
+            this.game.requestSetDisplay(buildingClass);
+        });
+
+        buildingSelectionElement.addEventListener("mouseout", () => {
+            this.game.requestRemoveDisplay(buildingClass);
         });
 
         buildingSelectionElement.addEventListener("contextmenu", (event) => {

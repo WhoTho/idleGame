@@ -2,7 +2,7 @@
  * Created Date: Mar 26 2024, 08:24:56 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 01:11:26 PM
+ * Last Modified: Mar 30 2024, 04:22:46 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -102,6 +102,73 @@ class Building {
         } else {
             this.money -= money;
         }
+    }
+
+    static createDisplayElement() {
+        // for building selection
+        let element = document.createElement("div");
+        // element.classList.add("display-part");
+
+        let iconElement = document.createElement("img");
+        iconElement.classList.add("building-icon");
+        iconElement.alt = this.displayName;
+        element.appendChild(iconElement);
+
+        let buildingNameElement = document.createElement("h1");
+        buildingNameElement.classList.add("building-name");
+        buildingNameElement.innerText = this.displayName;
+        element.appendChild(buildingNameElement);
+
+        if (this.baseMaxEnergy) {
+            let energyElement = document.createElement("p");
+            energyElement.classList.add("building-energy");
+            energyElement.innerText = `Energy: ${this.baseMaxEnergy}`;
+            element.appendChild(energyElement);
+        }
+
+        if (this.baseMaxMoney) {
+            let moneyElement = document.createElement("p");
+            moneyElement.classList.add("building-money");
+            moneyElement.innerText = `Money: ${this.baseMaxMoney}`;
+            element.appendChild(moneyElement);
+        }
+
+        return element;
+    }
+
+    createDisplayElement() {
+        // for placed building hovering
+        let element = document.createElement("div");
+        // element.classList.add("display-part")
+
+        //let iconElement = document.createElement("img");
+        let iconElement = document.createElement("img");
+        iconElement.classList.add("building-icon");
+        iconElement.alt = this.constructor.displayName;
+        element.appendChild(iconElement);
+
+        let buildingNameElement = document.createElement("h1");
+        buildingNameElement.classList.add("building-name");
+        buildingNameElement.innerText = this.constructor.displayName;
+        element.appendChild(buildingNameElement);
+
+        if (this.maxEnergy) {
+            //TODO add energyPerTick once we have it
+            let energyElement = document.createElement("p");
+            energyElement.classList.add("building-energy");
+            energyElement.innerText = `${this.energy} / ${this.maxEnergy}`;
+            element.appendChild(energyElement);
+        }
+
+        if (this.maxMoney) {
+            //TODO add energy per fill and money per fill
+            let moneyElement = document.createElement("p");
+            moneyElement.classList.add("building-money");
+            moneyElement.innerText = `${this.money} / ${this.maxMoney}`;
+            element.appendChild(moneyElement);
+        }
+
+        return element;
     }
 }
 

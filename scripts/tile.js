@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:41:54 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 02:46:52 PM
+ * Last Modified: Mar 30 2024, 04:26:44 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -81,7 +81,13 @@ class Tile {
                 this.game.requestBuildingPlacement(this);
             } else if (this.game.rightMouseDown) {
                 this.game.requestBuildingRemoval(this);
+            } else {
+                this.game.requestSetDisplay(this);
             }
+        });
+
+        this.element.addEventListener("mouseout", () => {
+            this.game.requestRemoveDisplay(this);
         });
     }
 
@@ -115,6 +121,14 @@ class Tile {
             money: 0,
             energy: 0,
         };
+    }
+
+    createDisplayElement() {
+        if (!this.building) {
+            return null;
+        }
+
+        return this.building.createDisplayElement();
     }
 }
 
