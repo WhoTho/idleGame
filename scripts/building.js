@@ -2,7 +2,7 @@
  * Created Date: Mar 26 2024, 08:24:56 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 30 2024, 04:54:10 PM
+ * Last Modified: Apr 01 2024, 09:33:52 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -15,36 +15,31 @@ class Building {
         this.game = game;
         this.tile = tile;
 
-        this.energy = 0;
-        this.maxEnergy = 0;
-        this.money = 0;
-        this.maxMoney = 0;
-
-        this.modifications = {
-            energy: {
-                total: 1,
-                additive: {},
-                multiplicative: {},
-            },
-            money: {
-                total: 1,
-                additive: {},
-                multiplicative: {},
-            },
-        };
-
         this.loadConfigs();
     }
 
     loadConfigs() {
         if (!this.constructor.displayName) {
-            console.error("No displayName found for", this.constructor.name);
+            console.error("Incomplete setup data for", this.constructor.name);
             return this;
         }
 
-        this.maxEnergy = this.constructor.baseMaxEnergy;
-        this.maxMoney = this.constructor.baseMaxMoney;
+        if (this.constructor.resourceType === "energy") {
+            this.energy = 0;
+            this.maxEnergy = this.constructor.baseMaxEnergy;
+            this.energyPerTick = this.constructor.baseEnergyPerTick;
+        } else {
+            this.money = 0;
+            this.maxMoney = this.constructor.baseMaxMoney;
+            this.energyPerFill = this.constructor.baseEnergyPerFill;
+            this.moneyPerFill = this.constructor.baseMoneyPerFill;
+        }
 
+        this.modifications = {
+            total: 1,
+            additive: {},
+            multiplicative: {},
+        };
         this.cost = this.constructor.baseCost;
     }
 
@@ -56,61 +51,36 @@ class Building {
         this.calculateData();
     }
 
-    onRemoval() {
-        console.error("onRemoval() not implemented");
-    }
+    onRemoval() {}
 
-    calculateData() {
-        this.calculateModificationData();
-        console.log(this.modifications);
-        console.error("calculateData() not implemented");
-    }
+    calculateData() {}
 
     calculateModificationData() {
-        //TODO implement calling this
-        this.modifications.energy.total = this.getTotalModifications("energy");
-        this.modifications.money.total = this.getTotalModifications("money");
+        this.modifications.total = this.getTotalModifications();
     }
 
     collectResources(percent = 1) {
-        let collected = {
-            energy: 0,
-            money: 0,
-        };
-
-        if (this.energy) {
-            let collectedEnergy = this.energy * percent;
-            this.removeEnergy(collectedEnergy);
-            collected.energy = collectedEnergy;
+        let collected = 0;
+        if (this.constructor.resourceType === "energy") {
+            collected = this.energy * percent;
+            this.removeEnergy(collected);
+        } else {
+            collected = this.money * percent;
+            this.removeMoney(collected);
         }
 
-        if (this.money) {
-            let collectedMoney = this.money * percent;
-            this.removeMoney(collectedMoney);
-            collected.money = collectedMoney;
-        }
-
-        console.log("collected", collected);
-        this.applyModifications(collected);
-        console.log("collected after mods", collected);
+        collected = this.applyModifications(collected);
 
         return collected;
     }
 
-    applyModifications(collected) {
-        for (let resource in collected) {
-            collected[resource] *= this.modifications[resource].total;
-        }
-
-        return collected;
+    applyModifications(amount) {
+        return amount * this.modifications.total;
     }
 
-    getTotalModifications(resource) {
-        let totalAddFactor = Object.values(this.modifications[resource].additive).reduce((acc, val) => acc + val, 0);
-        let totalMultFactor = Object.values(this.modifications[resource].multiplicative).reduce(
-            (acc, val) => acc * val,
-            1
-        );
+    getTotalModifications() {
+        let totalAddFactor = Object.values(this.modifications.additive).reduce((acc, val) => acc + val, 0);
+        let totalMultFactor = Object.values(this.modifications.multiplicative).reduce((acc, val) => acc * val, 1);
 
         return (1 + totalAddFactor) * totalMultFactor;
     }
@@ -162,19 +132,19 @@ class Building {
         buildingNameElement.innerText = this.displayName;
         element.appendChild(buildingNameElement);
 
-        if (this.baseMaxEnergy) {
-            let energyElement = document.createElement("p");
-            energyElement.classList.add("building-energy");
-            energyElement.innerText = `Energy: ${this.baseMaxEnergy}`;
-            element.appendChild(energyElement);
-        }
+        let costElement = document.createElement("p");
+        costElement.classList.add("building-cost");
+        costElement.innerText = `Costs $${this.baseCost}`;
+        element.appendChild(costElement);
 
-        if (this.baseMaxMoney) {
-            let moneyElement = document.createElement("p");
-            moneyElement.classList.add("building-money");
-            moneyElement.innerText = `Money: ${this.baseMaxMoney}`;
-            element.appendChild(moneyElement);
+        let generationElement = document.createElement("p");
+        generationElement.classList.add("building-generation");
+        if (this.resourceType === "energy") {
+            generationElement.innerText = `Generates ${this.baseEnergyPerTick} energy per tick`;
+        } else {
+            generationElement.innerText = `Generates ${this.baseMoneyPerFill} money per fill (every ${this.baseEnergyPerFill} energy)`;
         }
+        element.appendChild(generationElement);
 
         return element;
     }
@@ -195,33 +165,33 @@ class Building {
         buildingNameElement.innerText = this.constructor.displayName;
         element.appendChild(buildingNameElement);
 
-        if (this.maxEnergy) {
+        if (this.constructor.resourceType === "energy") {
             //TODO add energyPerTick once we have it
             let energyElement = document.createElement("p");
             energyElement.classList.add("building-energy");
-            energyElement.innerText = `${this.energy} / ${this.maxEnergy}`;
+            energyElement.innerText = `Held energy: ${this.energy} / ${this.maxEnergy}`;
             element.appendChild(energyElement);
         }
 
-        if (this.maxMoney) {
+        if (this.constructor.resourceType === "money") {
             //TODO add energy per fill and money per fill
             let moneyElement = document.createElement("p");
             moneyElement.classList.add("building-money");
-            moneyElement.innerText = `${this.money} / ${this.maxMoney}`;
+            moneyElement.innerText = `Held money: ${this.money} / ${this.maxMoney}`;
             element.appendChild(moneyElement);
         }
 
-        if (this.modifications.money.total !== 1) {
+        if (this.modifications.total !== 12341) {
             let moneyModElement = document.createElement("p");
             moneyModElement.classList.add("building-money-mod");
-            moneyModElement.innerText = `Money modification: ${this.modifications.money.total}`;
+            moneyModElement.innerText = `Money modification: ${this.modifications.total}`;
             element.appendChild(moneyModElement);
-        }
+            // }
 
-        if (this.modifications.energy.total !== 1) {
+            // if (this.modifications.total !== 1) {
             let energyModElement = document.createElement("p");
             energyModElement.classList.add("building-energy-mod");
-            energyModElement.innerText = `Energy modification: ${this.modifications.energy.total}`;
+            energyModElement.innerText = `Energy modification: ${this.modifications.total}`;
             element.appendChild(energyModElement);
         }
 

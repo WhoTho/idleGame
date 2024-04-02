@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:39:51 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 30 2024, 04:24:35 PM
+ * Last Modified: Apr 01 2024, 09:26:49 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -66,22 +66,6 @@ class Game {
         this.gameGridElement.addEventListener("contextmenu", (event) => {
             event.preventDefault();
         });
-
-        document.addEventListener("mousedown", (event) => {
-            if (event.button === 0) {
-                this.leftMouseDown = true;
-            } else if (event.button === 2) {
-                this.rightMouseDown = true;
-            }
-        });
-
-        document.addEventListener("mouseup", (event) => {
-            if (event.button === 0) {
-                this.leftMouseDown = false;
-            } else if (event.button === 2) {
-                this.rightMouseDown = false;
-            }
-        });
     }
 
     _createGridTile(x, y) {
@@ -115,12 +99,12 @@ class Game {
         this.grid.forEach((row) => {
             row.forEach((tile) => {
                 let resources = tile.collectResources();
-                if (resources.money) {
-                    collectedResources.money += resources.money;
+                if (resources.type === "none") return;
+                if (!resources.type) {
+                    console.log(tile);
                 }
-                if (resources.energy) {
-                    collectedResources.energy += resources.energy;
-                }
+
+                collectedResources[resources.type] += resources.amount;
             });
         });
 
@@ -194,7 +178,6 @@ class Game {
     requestBuildingPlacement(tile) {
         let selectedBuildingClass = this.buildingSelection.selectedBuildingClass;
         if (!selectedBuildingClass) {
-            tile.setBuilding(null);
             return;
         }
 
@@ -219,12 +202,16 @@ class Game {
         tile.setBuilding(null);
     }
 
-    requestSetDisplay(displayObject) {
-        this.displaySection.display(displayObject);
+    requestSetDisplay(displayObject, force = false) {
+        this.displaySection.display(displayObject, force);
     }
 
-    requestRemoveDisplay(displayObject) {
-        this.displaySection.removeDisplay(displayObject);
+    requestRemoveDisplay(displayObject, force = false) {
+        this.displaySection.removeDisplay(displayObject, force);
+    }
+
+    requestSetToggleDisplay(displayObject) {
+        this.displaySection.toggleDisplay(displayObject);
     }
 
     updateInfo() {

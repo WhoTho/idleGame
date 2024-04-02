@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:41:54 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 30 2024, 04:36:21 PM
+ * Last Modified: Apr 01 2024, 09:26:54 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -11,7 +11,7 @@
  */
 
 class Tile {
-    constructor(game, x, y, element) {
+    constructor(game, x, y) {
         this.game = game;
 
         this.x = x;
@@ -57,29 +57,24 @@ class Tile {
             event.preventDefault();
             if (event.button === 0) {
                 // Left button
-                this.game.leftMouseDown = true;
-                this.game.requestBuildingPlacement(this);
+                if (
+                    !this.game.buildingSelection.selectedBuildingClass ||
+                    (this.building && this.building instanceof this.game.buildingSelection.selectedBuildingClass)
+                ) {
+                    this.game.requestSetToggleDisplay(this);
+                } else {
+                    this.game.requestBuildingPlacement(this);
+                }
             } else if (event.button === 2) {
                 // Right button
-                this.game.rightMouseDown = true;
                 this.game.requestBuildingRemoval(this);
             }
         });
 
-        this.element.addEventListener("mouseup", (event) => {
-            if (event.button === 0) {
-                // Left button
-                this.game.leftMouseDown = false;
-            } else if (event.button === 2) {
-                // Right button
-                this.game.rightMouseDown = false;
-            }
-        });
-
-        this.element.addEventListener("mouseover", () => {
-            if (this.game.leftMouseDown) {
+        this.element.addEventListener("mouseover", (event) => {
+            if (event.buttons === 1) {
                 this.game.requestBuildingPlacement(this);
-            } else if (this.game.rightMouseDown) {
+            } else if (event.buttons === 2) {
                 this.game.requestBuildingRemoval(this);
             } else {
                 this.game.requestSetDisplay(this);
@@ -95,7 +90,9 @@ class Tile {
         if (buildingClass === null) {
             this.element.innerText = "test";
 
-            this.building.onRemoval(this);
+            if (this.building) {
+                this.building.onRemoval(this);
+            }
             this.building = null;
             return;
         }
@@ -114,12 +111,16 @@ class Tile {
 
     collectResources() {
         if (this.building) {
-            return this.building.collectResources();
+            let amount = this.building.collectResources();
+            return {
+                type: this.building.constructor.resourceType,
+                amount: amount,
+            };
         }
 
         return {
-            money: 0,
-            energy: 0,
+            type: "none",
+            amount: 0,
         };
     }
 

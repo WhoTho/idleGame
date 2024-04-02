@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:09:39 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 02:53:35 PM
+ * Last Modified: Apr 01 2024, 06:24:38 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -57,6 +57,11 @@ body {
     border-right-color: var(--color-primary-darker);
     border-top-color: var(--color-primary-lighter);
     border-bottom-color: var(--color-primary-darker);
+}
+
+.selected {
+    border: 3px outset var(--color-light);
+    background-color: var(--color-primary);
 }
 
 .data-section {

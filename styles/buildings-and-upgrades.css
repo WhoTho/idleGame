@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 04:35:24 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 02:54:42 PM
+ * Last Modified: Apr 01 2024, 06:24:33 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -42,9 +42,4 @@
 
 .building-selection-element.unlocked {
     display: block !important;
-}
-
-.building-selection-element.selected {
-    border: 3px outset var(--color-light);
-    background-color: var(--color-primary);
 }

@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 04:01:45 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 29 2024, 01:11:50 PM
+ * Last Modified: Apr 01 2024, 09:28:12 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -14,6 +14,7 @@ import Building from "../building.js";
 
 class Bank extends Building {
     static buildingType = "bank";
+    static resourceType = "money";
 
     constructor(game, tile) {
         super(game, tile);
@@ -32,9 +33,9 @@ class Farm extends Bank {
     }
 
     tick() {
-        if (this.game.energy >= this.constructor.baseEnergyPerFill) {
-            this.game.removeEnergy(this.constructor.baseEnergyPerFill);
-            this.addMoney(this.constructor.baseMoneyPerFill);
+        if (this.game.energy >= this.energyPerFill) {
+            this.addMoney(this.moneyPerFill);
+            this.game.removeEnergy(this.energyPerFill);
         }
     }
 }

@@ -2,7 +2,7 @@
  * Created Date: Mar 25 2024, 03:55:18 PM
  * Author: @WhoTho#9592 whotho06@gmail.com
  * -----
- * Last Modified: Mar 30 2024, 04:54:30 PM
+ * Last Modified: Apr 01 2024, 05:52:24 PM
  * Modified By: @WhoTho#9592
  * -----
  * CHANGE LOG:
@@ -14,6 +14,7 @@ import Building from "../building.js";
 
 class Generator extends Building {
     static buildingType = "generator";
+    static resourceType = "energy";
 
     constructor(game, tile) {
         super(game, tile);
@@ -46,7 +47,7 @@ class WindMill extends Generator {
             }
         }
 
-        this.modifications.energy.multiplicative.placement = efficiency;
+        this.modifications.multiplicative.placement = efficiency;
         this.calculateModificationData();
     }
 }
